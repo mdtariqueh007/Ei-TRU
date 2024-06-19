@@ -1,0 +1,27 @@
+#ifndef PARAMS_H
+#define PARAMS_H
+
+#define N 283
+#define T 44
+#define Q 617
+#define N3 3*N
+#define LOGQ
+#define N_SAMPLE_BYTES ((30*(N-1)+7)/8)
+#define N3_SAMPLE_BYTES ((30*(N3-1)+7)/8)
+#define N3_SAMPLE_M_BYTES ((32*(N3)+7)/8)
+
+#define T_SAMPLE_BYTES ((30*(T)+7)/8)
+#define SAMPLE_BYTE 0
+
+#define N3_SAMPLE_F_BYTES N3_SAMPLE_BYTES+T_SAMPLE_BYTES
+#define N3_SAMPLE_FG_BYTES N3_SAMPLE_F_BYTES+N3_SAMPLE_BYTES
+// #define N3_SAMPLE_M_BYTES N3_SAMPLE_BYTES
+// #define N3_SAMPLE_M_BYTES N3_SAMPLE_BYTES+SAMPLE_BYTE
+
+#define LENGTH_OF_HASH 64
+
+#ifndef CRYPTO_NAMESPACE
+#define CRYPTO_NAMESPACE(s) s
+#endif
+
+#endif
