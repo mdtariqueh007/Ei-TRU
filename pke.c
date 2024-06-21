@@ -88,7 +88,7 @@ void pke_keypair(Term *f,Term *g, Term *h, Term P,unsigned char arr_seed[N3_SAMP
 
 }
 
-void pke_encrypt(group_ring* H, group_ring* M,Term P,Term q,group_ring*E,unsigned char arr_seed[N3_SAMPLE_BYTES]){
+void pke_encrypt(group_ring* H, group_ring* M,Term *phi,Term P,Term q,group_ring*E){
 
     // printf("Text: \n");
     // poly_ZwCnC3_print(M);
@@ -105,9 +105,9 @@ void pke_encrypt(group_ring* H, group_ring* M,Term P,Term q,group_ring*E,unsigne
 
     // randombytes(arr_seed,N3_SAMPLE_BYTES);
 
-    Term phi[N3];
+    // Term phi[N3];
 
-    sample_lphi(phi,arr_seed);
+    // sample_lphi(phi,arr_seed);
 
     group_ring PHI;
 

@@ -3,9 +3,9 @@
 Term poly_div_rat(Term A, Term q){ // q is of form (c + 0 w) where c is prime
     
     Term rem;
-
     
-    
+    // int x = (A.a)%(q.a);
+    // int y = (A.b)%(q.a);
     int x = (A.a%(q.a) + q.a)%(q.a);
     int y = (A.b%(q.a) + q.a)%(q.a);
 
@@ -41,6 +41,9 @@ Term poly_div_rat(Term A, Term q){ // q is of form (c + 0 w) where c is prime
         rem.a = x;
         rem.b = y;
     } 
+
+    // rem.a = (rem.a%(q.a) + q.a)%q.a;
+    // rem.b = (rem.b%(q.a) + q.a)%q.a;
 
 
     return rem;

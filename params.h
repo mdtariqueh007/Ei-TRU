@@ -1,9 +1,9 @@
 #ifndef PARAMS_H
 #define PARAMS_H
 
-#define N 283
-#define T 44
-#define Q 617
+#define N 127
+#define T 19
+#define Q 2039
 #define N3 3*N
 #define LOGQ
 #define N_SAMPLE_BYTES ((30*(N-1)+7)/8)
@@ -19,6 +19,13 @@
 // #define N3_SAMPLE_M_BYTES N3_SAMPLE_BYTES+SAMPLE_BYTE
 
 #define LENGTH_OF_HASH 64
+
+#define PACK_DEG (2*N3)
+#define PACK_TRINARY_BYTES ((PACK_DEG+4)/5)
+
+#define PPKE_MESSAGEBYTES (PACK_TRINARY_BYTES)
+
+#define CIPHERTEXTBYTES (PPKE_CIPHERTEXTBYTES)
 
 #ifndef CRYPTO_NAMESPACE
 #define CRYPTO_NAMESPACE(s) s

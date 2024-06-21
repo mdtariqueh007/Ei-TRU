@@ -96,3 +96,4 @@ void sample_lg(Term* r,const unsigned char u[N3_SAMPLE_BYTES]){
     }
 
 }
+
