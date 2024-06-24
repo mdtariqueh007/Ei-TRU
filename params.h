@@ -1,9 +1,9 @@
 #ifndef PARAMS_H
 #define PARAMS_H
 
-#define N 127
-#define T 19
-#define Q 2039
+#define N 109
+#define T 45
+#define Q 701
 #define N3 3*N
 #define LOGQ
 #define N_SAMPLE_BYTES ((30*(N-1)+7)/8)

@@ -90,7 +90,7 @@ int main(){
 
     unsigned char a[(11*N3+3)/4];
 
-    poly_Sq_tobytes(a,h);
+    poly_pack10_Sq_tobytes(a,h);
 
     for(int i = 0;i<(11*N3+3)/4;i++){
         printf("%d ",a[i]);
@@ -100,11 +100,25 @@ int main(){
 
     Term res[N3];
 
-    poly_Sq_frombytes(h,a);
+    poly_unpack10_Sq_frombytes(h,a);
+
+    
 
     printf("Unpacking: \n");
     poly_Zw_print(h,N3);
     poly_to_CnC3(h,&H);
+
+    // int cnt = 0;
+    // for(int i = 0;i<N3;i++){
+    //     if(res[i].a!=h[i].a || res[i].b!=h[i].b){
+    //         cnt++;
+    //         printf("%d\n",i);
+    //     }
+    // }
+
+    // printf("Incorrect at %d places\n",cnt);
+
+    // return 0;
     
 
 

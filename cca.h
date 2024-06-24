@@ -36,6 +36,8 @@ void CCA_enc(unsigned char* c,const char*m,const unsigned char* pk){
     E.b = (Term*)malloc(N*sizeof(Term));
     E.c = (Term*)malloc(N*sizeof(Term));
 
+    poly_to_CnC3(mprime,&MPRIME);
+
     pke_encrypt(&H, &MPRIME,phi,P,q,&E);
 
     Term ciphertext[N3];
@@ -104,7 +106,12 @@ void CCA_dec(unsigned char*m, const unsigned char *ciphertext, const unsigned ch
 
     sample_phi(phi,h,copy_message);
 
+    unsigned char cprime[CIPHERTEXTBYTES];
+
+    group_ring CT;
     
+
+
 
     
 
