@@ -1,14 +1,21 @@
 #ifndef PARAMS_H
 #define PARAMS_H
 
-#define N 109
-#define T 45
-#define Q 701
+#include <math.h>
+
+#define N 127
+#define T 19
+#define Q 2039
+#define p_ 2
 #define N3 3*N
-#define LOGQ
+// #define LOGQ
 #define N_SAMPLE_BYTES ((30*(N-1)+7)/8)
 #define N3_SAMPLE_BYTES ((30*(N3-1)+7)/8)
 #define N3_SAMPLE_M_BYTES ((32*(N3)+7)/8)
+
+#define LOGQ (int)ceil(log2(4.0*Q/3.0))
+
+#define CHAR_BYTES (LOGQ*N3*2+7)/8
 
 #define T_SAMPLE_BYTES ((30*(T)+7)/8)
 #define SAMPLE_BYTE 0
@@ -22,10 +29,12 @@
 
 #define PACK_DEG (2*N3)
 #define PACK_TRINARY_BYTES ((PACK_DEG+4)/5)
+// #define PACK_TRINARY_BYTES ((PACK_DEG)/7)
 
 #define PPKE_MESSAGEBYTES (PACK_TRINARY_BYTES)
+// #define PPKE_MESSAGEBYTES (CHAR_BYTES)
 
-#define CIPHERTEXTBYTES (PPKE_CIPHERTEXTBYTES)
+#define CIPHERTEXTBYTES (PPKE_MESSAGEBYTES)
 
 #ifndef CRYPTO_NAMESPACE
 #define CRYPTO_NAMESPACE(s) s

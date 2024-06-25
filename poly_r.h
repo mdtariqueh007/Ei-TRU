@@ -30,6 +30,9 @@ void poly_ZwCnC3_print(group_ring* r);
 #define poly_to_CnC3 CRYPTO_NAMESPACE(poly_to_CnC3)
 void poly_to_CnC3(Term* p,group_ring* result);
 
+#define CnC3_to_poly CRYPTO_NAMESPACE(CnC3_to_poly)
+void CnC3_to_poly(group_ring* R, Term* a);
+
 
 #endif
 

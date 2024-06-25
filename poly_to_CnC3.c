@@ -18,3 +18,11 @@ void poly_to_CnC3(Term* p,group_ring* result){
     }
 
 }
+
+void CnC3_to_poly(group_ring* R, Term* a){
+    for(int i = 0;i<N;i++){
+        a[i] = R->a[i];
+        a[i+N] = R->b[i];
+        a[i+2*N] = R->c[i]; 
+    }
+}

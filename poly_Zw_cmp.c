@@ -2,9 +2,9 @@
 
 Term q = {Q,0};
 
-int poly_Zw_cmp(const Term* a, const Term *b){
-    for(int i = 0;i<N;i++){
-        if((a[i].a%q.a + q.a)%q.a!=(b[i].a%q.a + q.a)%q.a || (a[i].b%q.a + q.a)%q.a!=(b[i].b%q.a + q.a)%q.a){
+int poly_Zw_cmp(const Term* a, const Term *b,int len){
+    for(int i = 0;i<len;i++){
+        if(a[i].a!=b[i].a || a[i].b!=b[i].b){
             return 0;
         }
     }

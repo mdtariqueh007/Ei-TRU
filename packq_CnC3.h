@@ -1,7 +1,13 @@
 #include "poly.h"
 #include<stdio.h>
 
-void poly_pack10_Sq_tobytes(unsigned char *r, const Term *a)
+void poly_pack_Sq_tobytes(unsigned char *r, Term *a);
+void poly_unpack_Sq_frombytes(Term *r, const unsigned char *a);
+
+
+#if Q==701
+
+void poly_pack_Sq_tobytes(unsigned char *r, Term *a)
 {
 
     Term q = {Q,0};
@@ -114,7 +120,7 @@ void poly_pack10_Sq_tobytes(unsigned char *r, const Term *a)
   }
 }
 
-void poly_unpack10_Sq_frombytes(Term *r, const unsigned char *a)
+void poly_unpack_Sq_frombytes(Term *r, const unsigned char *a)
 {
     int16_t arr[2*N3];
   int i;
@@ -185,8 +191,8 @@ void poly_unpack10_Sq_frombytes(Term *r, const unsigned char *a)
   // r->coeffs[NTRU_N-1] = 0;
 }
 
-
-void poly_pack11_Sq_tobytes(unsigned char *r, const Term *a)
+#elif Q==1361 || Q==1013
+void poly_pack_Sq_tobytes(unsigned char *r, Term *a)
 {
 
     Term q = {Q,0};
@@ -301,7 +307,7 @@ void poly_pack11_Sq_tobytes(unsigned char *r, const Term *a)
   }
 }
 
-void poly_unpack11_Sq_frombytes(Term *r, const unsigned char *a)
+void poly_unpack_Sq_frombytes(Term *r, const unsigned char *a)
 {
     int16_t arr[2*N3];
   int i;
@@ -373,8 +379,8 @@ void poly_unpack11_Sq_frombytes(Term *r, const unsigned char *a)
   // r->coeffs[NTRU_N-1] = 0;
 }
 
-
-void poly_pack12_Sq_tobytes(unsigned char *r, const Term *a)
+#elif Q==2039 || Q==2903
+void poly_pack_Sq_tobytes(unsigned char *r, Term *a)
 {
 
     Term q = {Q,0};
@@ -495,7 +501,7 @@ void poly_pack12_Sq_tobytes(unsigned char *r, const Term *a)
   }
 }
 
-void poly_unpack12_Sq_frombytes(Term *r, const unsigned char *a)
+void poly_unpack_Sq_frombytes(Term *r, const unsigned char *a)
 {
     int16_t arr[2*N3];
   int i;
@@ -564,8 +570,8 @@ void poly_unpack12_Sq_frombytes(Term *r, const unsigned char *a)
   // r->coeffs[NTRU_N-1] = 0;
 }
 
-
-void poly_pack13_Sq_tobytes(unsigned char *r, const Term *a)
+#elif Q==3863
+void poly_pack_Sq_tobytes(unsigned char *r, Term *a)
 {
 
     Term q = {Q,0};
@@ -676,7 +682,7 @@ void poly_pack13_Sq_tobytes(unsigned char *r, const Term *a)
   }
 }
 
-void poly_unpack13_Sq_frombytes(Term *r, const unsigned char *a)
+void poly_unpack_Sq_frombytes(Term *r, const unsigned char *a)
 {
     int16_t arr[2*N3];
   int i;
@@ -738,3 +744,4 @@ void poly_unpack13_Sq_frombytes(Term *r, const unsigned char *a)
   }
   // r->coeffs[NTRU_N-1] = 0;
 }
+#endif

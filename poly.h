@@ -44,7 +44,7 @@ void poly_Zw_print(Term *p,int len);
 void poly_Zw_shift_t(const Term*f ,int t, Term *r);
 
 #define poly_Zw_cmp CRYPTO_NAMESPACE(poly_Zw_cmp)
-int poly_Zw_cmp(const Term* a, const Term *b);
+int poly_Zw_cmp(const Term* a, const Term *b,int len);
 
 #endif
 

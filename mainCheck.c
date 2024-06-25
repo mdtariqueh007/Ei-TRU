@@ -1,8 +1,8 @@
 #include <stdio.h>
 
 #include "poly_r.h"
-#include "sample.h"
-#include "rng.h"
+// #include "sample.h"
+// #include "rng.h"
 
 #include "crypto_sort_int32.h"
 
@@ -13,10 +13,12 @@
 
 #include<time.h>
 
-#include "pke.h"
+// #include "pke.h"
+// #include "ppke.h"
 
-#include "pack3_CnC3.h"
-#include "packq_CnC3.h"
+// #include "pack3_CnC3.h"
+// #include "packq_CnC3.h"
+#include "cca.h"
 
 #define test_cases 1
 
@@ -35,32 +37,32 @@ int main(){
 
         printf("Test %d: \n",test_cases - test );
 
-    Term f[N3];
-    Term fq[N3];
-    Term g[N3];
+    // Term f[N3];
+    // Term fq[N3];
+    // Term g[N3];
 
-    Term h[N3];
+    // Term h[N3];
 
 
 
     
 
      
-    group_ring H;
-    group_ring PHI;
-    group_ring M;
-    group_ring Original_M;
-    group_ring E;
-    E.a = (Term*)malloc(N*sizeof(Term));
-    E.b = (Term*)malloc(N*sizeof(Term));
-    E.c = (Term*)malloc(N*sizeof(Term));
-    group_ring F;
-    group_ring A;
-    A.a = (Term*)malloc(N*sizeof(Term));
-    A.b = (Term*)malloc(N*sizeof(Term));
-    A.c = (Term*)malloc(N*sizeof(Term));
-    Term P = {2,0};
-    Term q = {Q,0};
+    // group_ring H;
+    // group_ring PHI;
+    // group_ring M;
+    // group_ring Original_M;
+    // group_ring E;
+    // E.a = (Term*)malloc(N*sizeof(Term));
+    // E.b = (Term*)malloc(N*sizeof(Term));
+    // E.c = (Term*)malloc(N*sizeof(Term));
+    // group_ring F;
+    // group_ring A;
+    // A.a = (Term*)malloc(N*sizeof(Term));
+    // A.b = (Term*)malloc(N*sizeof(Term));
+    // A.c = (Term*)malloc(N*sizeof(Term));
+    // Term P = {2,0};
+    // Term q = {Q,0};
 
     ///////////////////////////////////
 
@@ -76,37 +78,37 @@ int main(){
 
     ///////////////////////////////////////////////////////////////////////
 
-    unsigned char fg_seed[N3_SAMPLE_FG_BYTES];
+    // unsigned char fg_seed[N3_SAMPLE_FG_BYTES];
 
-    randombytes(fg_seed,N3_SAMPLE_FG_BYTES);
+    // randombytes(fg_seed,N3_SAMPLE_FG_BYTES);
 
-    pke_keypair(f,g, h, P,fg_seed);
-
-    
-    printf("\n----------------------Public key ------------------------------------------\n");
-    poly_Zw_print(h,N3);
-    printf("\n----------------------              ------------------------------------------\n");
-    poly_to_CnC3(h,&H);
-
-    unsigned char a[(11*N3+3)/4];
-
-    poly_pack10_Sq_tobytes(a,h);
-
-    for(int i = 0;i<(11*N3+3)/4;i++){
-        printf("%d ",a[i]);
-    }
-
-    printf("\n");
-
-    Term res[N3];
-
-    poly_unpack10_Sq_frombytes(h,a);
+    // pke_keypair(f,g, h, P,fg_seed);
 
     
+    // printf("\n----------------------Public key ------------------------------------------\n");
+    // poly_Zw_print(h,N3);
+    // printf("\n----------------------              ------------------------------------------\n");
+    // poly_to_CnC3(h,&H);
 
-    printf("Unpacking: \n");
-    poly_Zw_print(h,N3);
-    poly_to_CnC3(h,&H);
+    // unsigned char a[(LOGQ*N3+3)/4];
+
+    // poly_pack_Sq_tobytes(a,h);
+
+    // for(int i = 0;i<(LOGQ*N3+3)/4;i++){
+    //     printf("%d ",a[i]);
+    // }
+
+    // printf("\n");
+
+    // Term res[N3];
+
+    // poly_unpack_Sq_frombytes(h,a);
+
+    
+
+    // printf("Unpacking: \n");
+    // poly_Zw_print(h,N3);
+    // poly_to_CnC3(h,&H);
 
     // int cnt = 0;
     // for(int i = 0;i<N3;i++){
@@ -138,17 +140,17 @@ int main(){
 
     /////////////////////////////////////////////////////
 
-    unsigned char arr_seed_m[N3_SAMPLE_M_BYTES];
+    // unsigned char arr_seed_m[N3_SAMPLE_M_BYTES];
 
-    randombytes(arr_seed_m,N3_SAMPLE_M_BYTES);
+    // randombytes(arr_seed_m,N3_SAMPLE_M_BYTES);
 
-    Term m[N3];
+    // Term m[N3];
 
 
-    sample_lm(m,arr_seed_m);
+    // sample_lm(m,arr_seed_m);
 
-    poly_to_CnC3(m,&M);
-    poly_to_CnC3(m,&Original_M);
+    // poly_to_CnC3(m,&M);
+    // poly_to_CnC3(m,&Original_M);
 
     ////////////////////////////////////////////////////////////
 
@@ -160,15 +162,15 @@ int main(){
 
     ////////////////////////////////////////////////////////////
 
-    unsigned char arr_seed[N3_SAMPLE_BYTES];
+    // unsigned char arr_seed[N3_SAMPLE_BYTES];
 
-    randombytes(arr_seed,N3_SAMPLE_BYTES);
+    // randombytes(arr_seed,N3_SAMPLE_BYTES);
 
-    Term phi[N3];
+    // Term phi[N3];
 
-    sample_lphi(phi,arr_seed);
+    // sample_lphi(phi,arr_seed);
 
-    pke_encrypt(&H,&M,phi,P,q,&E);
+    // pke_encrypt(&H,&M,phi,P,q,&E);
 
     ///////////////////////////////////////////////////////////
 
@@ -182,12 +184,12 @@ int main(){
 
     ///////////////////////////////////////
 
-    poly_to_CnC3(f,&F);
+    // poly_to_CnC3(f,&F);
 
     
     
 
-    pke_decrypt(&F,&E,P,q,&A);
+    // pke_decrypt(&F,&E,P,q,&A);
 
     //////////////////////////////////
 
@@ -201,38 +203,230 @@ int main(){
 
     
 /////////////////////////////////////////////////////
-    int one = 0;
-    int y = 0;
-    int y2 = 0;
+    // int one = 0;
+    // int y = 0;
+    // int y2 = 0;
 
-    if(poly_Zw_cmp(Original_M.a,A.a)){
-        one = 1;
-    }
-    else{
-        one = 0;
-    }
-    if(poly_Zw_cmp(Original_M.b,A.b)){
-        y = 1;
-    }
-    else{
-        y = 0;
-    }
-    if(poly_Zw_cmp(Original_M.c,A.c)){
-        y2 = 1;
-    }
-    else{
-        y2 = 0;
-    }
+    // if(poly_Zw_cmp(Original_M.a,A.a)){
+    //     one = 1;
+    // }
+    // else{
+    //     one = 0;
+    // }
+    // if(poly_Zw_cmp(Original_M.b,A.b)){
+    //     y = 1;
+    // }
+    // else{
+    //     y = 0;
+    // }
+    // if(poly_Zw_cmp(Original_M.c,A.c)){
+    //     y2 = 1;
+    // }
+    // else{
+    //     y2 = 0;
+    // }
 
-    printf("%d %d %d\n",one,y,y2);
+    // printf("%d %d %d\n",one,y,y2);
 
-    if(one && y && y2){
-        printf("True\n");
+    // if(one && y && y2){
+    //     printf("True\n");
         
+    // }
+    // else{
+    //     printf("False\n");
+    // }
+
+
+    // unsigned char pk[CHAR_BYTES];
+    // unsigned char sk[CHAR_BYTES];
+
+    // unsigned char fg_seed[N3_SAMPLE_FG_BYTES];
+
+    // randombytes(fg_seed,N3_SAMPLE_FG_BYTES);
+
+    // ppke_keypair(pk, sk,fg_seed);
+
+    // unsigned char c[CHAR_BYTES];
+
+    // unsigned char arr_seed[N3_SAMPLE_BYTES];
+
+    // randombytes(arr_seed,N3_SAMPLE_BYTES);
+
+    // Term phi[N3];
+
+    // sample_lphi(phi,arr_seed); 
+
+    // unsigned char arr_seed_m[N3_SAMPLE_M_BYTES];
+
+    // randombytes(arr_seed_m,N3_SAMPLE_M_BYTES);
+
+    // Term m[N3];
+
+
+    // sample_lm(m,arr_seed_m);
+    
+    // Term h[N3];
+
+    // poly_unpack_Sq_frombytes(h,pk);
+
+    // ppke_encrypt(c,phi,h,m);
+
+    // // unsigned char a[CHAR_BYTES];
+
+    // Term f[N3];
+
+    // poly_unpack_Sq_frombytes(f,sk);
+
+    // Term retrieved_msg[N3];
+    // ppke_decrypt(retrieved_msg, c,f);
+
+    // // Term original_msg[N3];
+
+    // // poly_unpack_Sq_frombytes(original_msg,m);
+    // // poly_unpack_Sq_frombytes(retrieved_msg,a);
+
+    // poly_Zw_print(m,N3);
+    // poly_Zw_print(retrieved_msg,N3);
+
+    // int cnt_ = 0;
+
+    // for(int i = 0;i<N3;i++){
+    //     if(m[i].a!=retrieved_msg[i].a || m[i].b!=retrieved_msg[i].b){
+    //         cnt_++;
+    //         printf("%d \n",i);
+    //     }
+    // }
+
+    // printf("Incorrect cnt : %d\n",cnt_);
+
+    // if(poly_Zw_cmp(m,retrieved_msg,N3)){
+    //     printf("True\n");
+    // }
+    // else{
+    //     printf("False\n");
+    // }
+
+
+    //****************************************************************** */
+
+    unsigned char pk[CHAR_BYTES];
+    unsigned char sk[CHAR_BYTES];
+    unsigned char random[CHAR_BYTES];
+
+    // printf("Start address of sk : %d\n",&sk[0]);
+    // printf("End address of sk : %d\n",&sk[CHAR_BYTES-1]);
+    // printf("start address of random : %d\n",&random[0]);
+
+    
+
+
+
+    CCA_keypair(pk,sk);
+
+    // printf("Key generation:\n");
+    // for(int i = 0;i<CHAR_BYTES;i++){
+    //     printf("%d, ",sk[i]);
+    // }
+    // printf("\n");
+
+    // for(int i = 0;i<CHAR_BYTES;i++){
+    //     sk_copy[i] = sk[i];
+    // }
+
+
+    unsigned char arr_seed_m[N3_SAMPLE_M_BYTES];
+
+    randombytes(arr_seed_m,N3_SAMPLE_M_BYTES);
+     
+
+    Term m[N3];
+
+    sample_lm(m,arr_seed_m);
+
+   
+
+    /******************************************************* */
+
+    // printf("\n*******************   ORIGINAL MESSAGE           ****************************\n");
+
+    // poly_Zw_print(m,N3);
+
+    // printf("\n***********************************************\n");
+
+    /************************************** */
+
+    unsigned char message[CHAR_BYTES];
+    unsigned char c[CHAR_BYTES];
+    unsigned char a[CHAR_BYTES];
+
+    poly_pack_Sq_tobytes(message,m);
+
+    //  printf("Key generation before encryption:\n");
+    // for(int i = 0;i<CHAR_BYTES;i++){
+    //     printf("%d, ",sk[i]);
+    // }
+
+
+    /******************************************* */
+
+    // printf("message packed: \n"); for(int i = 0;i<PPKE_MESSAGEBYTES;i++){
+    //     printf("%d ",message[i]);
+    // }
+    // printf("\n");
+
+    // Term unpacked_message[N3];
+
+    // poly_unpack_Sq_frombytes(unpacked_message,message);
+
+    // printf("unpacked message:\n");
+    // poly_Zw_print(unpacked_message,N3);
+
+    // int cnt = 0;
+
+    // for(int i = 0;i<N3;i++){
+    //     if(m[i].a!=unpacked_message[i].a || m[i].b!=unpacked_message[i].b){
+    //         printf("%d \n",i);
+    //         cnt++;
+    //     } 
+    // }
+
+    // printf("Incorrect at %d unpacking\n",cnt);
+
+    /*************************************************** */
+
+    // printf("CHAR_BYTES : %d\n",CHAR_BYTES);
+    // printf("PPKE_MESSAGEBYTES : %d\n",PPKE_MESSAGEBYTES);
+    // printf("CIPHERTEXTBYTES : %d\n",CIPHERTEXTBYTES);
+
+   
+    
+
+    CCA_encrypt(c,message,pk);
+    // printf("In main\n");
+
+
+       
+
+
+    int ret_val = CCA_decrypt(a,c,sk,pk);
+
+    if(ret_val==0){
+        printf("Successfull\n");
     }
-    else{
-        printf("False\n");
-    }
+
+    /********************************************** */
+
+
+
+
+    
+
+    
+
+
+
+
+
 
 
     
@@ -245,7 +439,7 @@ int main(){
 
 
 
-    printf("\n-------------End --------------\n");
+    // printf("\n-------------End --------------\n");
 
     
     }

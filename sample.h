@@ -19,7 +19,9 @@ void sample_lg(Term* r,const unsigned char u[N3_SAMPLE_BYTES]);
 void sample_fixed_type_lg(int *r, const unsigned char u[N3_SAMPLE_BYTES]);
 
 #define sample_lphi CRYPTO_NAMESPACE(sample_lphi)
+#define sample_phi CRYPTO_NAMESPACE(sample_phi)
 void sample_lphi(Term* r,const unsigned char u[N3_SAMPLE_BYTES]);
+void sample_phi(Term* phi,const Term* h, const Term* m);
 
 #define sample_lm CRYPTO_NAMESPACE(sample_lm)
 #define sample_fixed_type_lm CRYPTO_NAMESPACE(sample_fixed_type_lm)
