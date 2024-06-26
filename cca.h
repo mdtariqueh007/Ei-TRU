@@ -17,7 +17,7 @@ void CCA_encrypt(unsigned char *c,const unsigned char *m,unsigned char *pk){
     Term phi[N3];
     Term mprime[N3];
 
-    poly_unpack_Sq_frombytes(mprime,m);
+    poly_S3m_frombytes(mprime,m);
 
     // printf("\n*******************   ORIGINAL MESSAGE TEXT           ****************************\n");
 
@@ -36,7 +36,7 @@ void CCA_encrypt(unsigned char *c,const unsigned char *m,unsigned char *pk){
 
     unsigned char tmpmsg[CHAR_BYTES];
 
-    poly_pack_Sq_tobytes(tmpmsg,mprime);
+    poly_S3m_tobytes(tmpmsg,mprime);
 
     // printf("\n*******************   TEMP MESSAGE TEXT           ****************************\n");
 
@@ -71,16 +71,18 @@ int CCA_decrypt(unsigned char *m, const unsigned char* ciphertext, unsigned char
 
     // printf("In decryption\n");
 
-    printf("Secret key:\n");for(int i = 0;i<CHAR_BYTES;i++){
-        printf("%d, ",secretkey[i]);
-    }
-    printf("\n");
+    // printf("Secret key:\n");for(int i = 0;i<CHAR_BYTES;i++){
+    //     printf("%d, ",secretkey[i]);
+    // }
+    // printf("\n");
 
     // secretkey[0]++;
 
     poly_unpack_Sq_frombytes(h,publickey);
 
-    poly_unpack_Sq_frombytes(f,secretkey);
+    poly_S3_frombytes(f,secretkey);
+
+    f[0].a += 1;
 
     // printf("f:\n");poly_Zw_print(f,N3);
 
@@ -141,7 +143,7 @@ int CCA_decrypt(unsigned char *m, const unsigned char* ciphertext, unsigned char
 
     printf("Incorrect at %d indices\n",cnt);
 
-    poly_pack_Sq_tobytes(m,message);
+    poly_S3m_tobytes(m,message);
     return 0;
 }
 

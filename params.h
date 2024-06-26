@@ -3,9 +3,9 @@
 
 #include <math.h>
 
-#define N 127
-#define T 19
-#define Q 2039
+#define N 211
+#define T 14
+#define Q 1361
 #define p_ 2
 #define N3 3*N
 // #define LOGQ
@@ -15,7 +15,13 @@
 
 #define LOGQ (int)ceil(log2(4.0*Q/3.0))
 
-#define CHAR_BYTES (LOGQ*N3*2+7)/8
+
+// #if Q == 1013
+// #define CHAR_BYTES (LOGQ*N3*2+7)/8 + 1
+// #else 
+#define CHAR_BYTES (LOGQ*N3*2+15)/8 //added 1 for Q==1013
+// #endif
+
 
 #define T_SAMPLE_BYTES ((30*(T)+7)/8)
 #define SAMPLE_BYTE 0

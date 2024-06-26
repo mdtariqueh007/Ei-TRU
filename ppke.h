@@ -31,6 +31,8 @@ void ppke_keypair(unsigned char *pk, unsigned char* sk,unsigned char arr_seed[N3
 
         poly_Zw_mul_p(f,P,N3);
 
+        poly_S3_tobytes(sk,f);
+
         f[0].a += 1;
 
         
@@ -98,23 +100,23 @@ void ppke_keypair(unsigned char *pk, unsigned char* sk,unsigned char arr_seed[N3
 
     // printf("\nInside key gen\n");
 
-    printf("Key generation before :\n");
-    for(int i = 0;i<CHAR_BYTES;i++){
-        printf("%d, ",sk[i]);
-    }
-    printf("\n");
-    poly_pack_Sq_tobytes(sk,f);
-    printf("Key generation:\n");
-    for(int i = 0;i<CHAR_BYTES;i++){
-        printf("%d, ",sk[i]);
-    }
-    printf("\n");
+    // printf("Key generation before :\n");
+    // for(int i = 0;i<CHAR_BYTES;i++){
+    //     printf("%d, ",sk[i]);
+    // }
+    // printf("\n");
+    // poly_pack_Sq_tobytes(sk,f);
+    // printf("Key generation:\n");
+    // for(int i = 0;i<CHAR_BYTES;i++){
+    //     printf("%d, ",sk[i]);
+    // }
+    // printf("\n");
     poly_pack_Sq_tobytes(pk,h);
 
-    printf("original f : \n");
-    poly_Zw_print(f,N3);
-    printf("original h : \n");
-    poly_Zw_print(h,N3);
+    // printf("original f : \n");
+    // poly_Zw_print(f,N3);
+    // printf("original h : \n");
+    // poly_Zw_print(h,N3);
 
 
 

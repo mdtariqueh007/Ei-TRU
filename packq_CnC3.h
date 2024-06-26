@@ -11,20 +11,10 @@ void poly_pack_Sq_tobytes(unsigned char *r, Term *a)
 {
 
     Term q = {Q,0};
-
-    // Term copy[N3];
-
-    // poly_Zw_mod_q(a,q,copy);
-
-    // printf("\n----------------------------Copy-----------------------\n");
-
-    // poly_Zw_print(copy,N3);
-
-    // printf("\n----------------------------  -----------------------\n");
    
   int i,j;
   int16_t t[8];
-//   Term arr[4];
+
 
   int k = 0;
 
@@ -33,7 +23,7 @@ void poly_pack_Sq_tobytes(unsigned char *r, Term *a)
     for(j=0;j<8;j+=2){
         Term temp = a[k++];
         
-        // printf("(%d + %dw)\n",newTemp.a,newTemp.b);
+       
       t[j] = temp.a;
       if(t[j]<0){
         t[j] = -t[j];
@@ -45,11 +35,7 @@ void poly_pack_Sq_tobytes(unsigned char *r, Term *a)
         t[j+1] = t[j+1] | (1<<9);
       }
     }
-    // printf("\n************************************\n");
-    // for(int i = 0;i<8;i++){
-    //     printf("%d ",t[i]);
-    // }
-    // printf("\n***********************************\n");
+    
 
     r[10 * i + 0] = (t[0] & 0xff);
     r[10 * i + 1] = (t[0]>>8)&0x03 | (t[1] & 0x3f)<<2;
@@ -66,8 +52,7 @@ void poly_pack_Sq_tobytes(unsigned char *r, Term *a)
   for(j=0;j<PACK_DEG-8*i;j+=2){
 
     Term temp = a[k++];
-        // temp.a = (temp.a%(q.a) + q.a)%q.a;
-        // temp.b = (temp.b%(q.a) + q.a)%q.a;
+        
       t[j] = temp.a;
       if(t[j]<0){
         t[j] = -t[j];
@@ -84,8 +69,7 @@ void poly_pack_Sq_tobytes(unsigned char *r, Term *a)
 
   switch(PACK_DEG&0x07)
   {
-    // cases 0 and 6 are impossible since 2 generates (Z/n)* and
-    // p mod 8 in {1, 7} implies that 2 is a quadratic residue.
+    
     case 6:
     r[10 * i + 0] = (t[0] & 0xff);
     r[10 * i + 1] = (t[0]>>8)&0x03 | (t[1] & 0x3f)<<2;
@@ -97,21 +81,7 @@ void poly_pack_Sq_tobytes(unsigned char *r, Term *a)
     r[10 * i + 7] = (t[5]>>6)&0x0f | (t[6] & 0x0f)<<4;
     r[10 * i + 8] = (t[6]>>4)&0x3f | (t[7] & 0x03)<<6;
     break;
-    case 4:
-      r[11 * i + 0] = (unsigned char) (t[0]        & 0xff);
-      r[11 * i + 1] = (unsigned char) (t[0] >>  8) | ((t[1] & 0x1f) << 3);
-      r[11 * i + 2] = (unsigned char) (t[1] >>  5) | ((t[2] & 0x03) << 6);
-      r[11 * i + 3] = (unsigned char) (t[2] >>  2) & 0xff;
-      r[11 * i + 4] = (unsigned char) (t[2] >> 10) | ((t[3] & 0x7f) << 1);
-      r[11 * i + 5] = (unsigned char) (t[3] >>  7) | ((t[4] & 0x0f) << 4);
-      break;
-    case 3:
-      r[11 * i + 0] = (unsigned char) (t[0]        & 0xff);
-      r[11 * i + 1] = (unsigned char) (t[0] >>  8) | ((t[1] & 0x1f) << 3);
-      r[11 * i + 2] = (unsigned char) (t[1] >>  5) | ((t[2] & 0x03) << 6);
-      r[11 * i + 3] = (unsigned char) (t[2] >>  2) & 0xff;
-      r[11 * i + 4] = (unsigned char) (t[2] >> 10) | ((t[3] & 0x7f) << 1);
-
+    
     case 2:
       r[11 * i + 0] = (unsigned char) (t[0]        & 0xff);
       r[11 * i + 1] = (unsigned char) (t[0] >>  8) | ((t[1] & 0x1f) << 3);
@@ -139,8 +109,7 @@ void poly_unpack_Sq_frombytes(Term *r, const unsigned char *a)
 
   switch(PACK_DEG&0x07)
   {
-    // cases 0 and 6 are impossible since 2 generates (Z/n)* and
-    // p mod 8 in {1, 7} implies that 2 is a quadratic residue.
+    
     case 6:
      arr[8 * i + 0] = (a[10 * i + 0] & 0xff) | (a[10 * i + 1] & 0x03)<<8;
     arr[8 * i + 1] = (a[10 * i + 1]>>2)&0x3f | (a[10 * i + 2]&0x0f)<<6;
@@ -149,19 +118,7 @@ void poly_unpack_Sq_frombytes(Term *r, const unsigned char *a)
     arr[8 * i + 4] = (a[10 * i + 5] & 0xff) | (a[10 * i + 6] & 0x03)<<8;
     arr[8 * i + 5] = (a[10 * i + 6]>>2)&0x3f | (a[10 * i + 7]&0x0f)<<6;
     break;
-    case 4:
-      arr[8*i+0] = (a[11*i+ 0] >> 0) | (((uint16_t)a[11*i+ 1] & 0x07) << 8);
-      arr[8*i+1] = (a[11*i+ 1] >> 3) | (((uint16_t)a[11*i+ 2] & 0x3f) << 5);
-      arr[8*i+2] = (a[11*i+ 2] >> 6) | (((uint16_t)a[11*i+ 3] & 0xff) << 2) | (((uint16_t)a[11*i+ 4] & 0x01) << 10);
-      arr[8*i+3] = (a[11*i+ 4] >> 1) | (((uint16_t)a[11*i+ 5] & 0x0f) << 7);
-      break;
-
-    case 3:
-      
-      arr[8*i+0] = (a[11*i+ 0] >> 0) | (((uint16_t)a[11*i+ 1] & 0x07) << 8);
-      arr[8*i+1] = (a[11*i+ 1] >> 3) | (((uint16_t)a[11*i+ 2] & 0x3f) << 5);
-      arr[8*i+2] = (a[11*i+ 2] >> 6) | (((uint16_t)a[11*i+ 3] & 0xff) << 2) | (((uint16_t)a[11*i+ 4] & 0x01) << 10);
-      break;
+    
 
     case 2:
       arr[8*i+0] = (a[11*i+ 0] >> 0) | (((uint16_t)a[11*i+ 1] & 0x07) << 8);
@@ -170,16 +127,13 @@ void poly_unpack_Sq_frombytes(Term *r, const unsigned char *a)
   }
   int k = 0;
 
-  // Term q = {Q,0};
-
+  
   for(int i = 0;i<N3*2;i++){
         int sign = (arr[i]&(1<<9))!=0;
-        // if((r[i]&(1<<11))){
-        //     sign = 1;
-        // }
+       
         arr[i] = arr[i]&0x1ff;
         if(sign){
-            // printf("Changed\n");
+            
             arr[i] = -arr[i];
         }
   }
@@ -188,7 +142,7 @@ void poly_unpack_Sq_frombytes(Term *r, const unsigned char *a)
     r[i].a = arr[k++];
     r[i].b = arr[k++];
   }
-  // r->coeffs[NTRU_N-1] = 0;
+  
 }
 
 #elif Q==1361 || Q==1013
@@ -197,19 +151,10 @@ void poly_pack_Sq_tobytes(unsigned char *r, Term *a)
 
     Term q = {Q,0};
 
-    // Term copy[N3];
-
-    // poly_Zw_mod_q(a,q,copy);
-
-    // printf("\n----------------------------Copy-----------------------\n");
-
-    // poly_Zw_print(copy,N3);
-
-    // printf("\n----------------------------  -----------------------\n");
-   
+    
   int i,j;
   int16_t t[8];
-//   Term arr[4];
+
 
   int k = 0;
 
@@ -218,7 +163,7 @@ void poly_pack_Sq_tobytes(unsigned char *r, Term *a)
     for(j=0;j<8;j+=2){
         Term temp = a[k++];
         
-        // printf("(%d + %dw)\n",newTemp.a,newTemp.b);
+        
       t[j] = temp.a;
       if(t[j]<0){
         t[j] = -t[j];
@@ -230,12 +175,7 @@ void poly_pack_Sq_tobytes(unsigned char *r, Term *a)
         t[j+1] = t[j+1] | (1<<10);
       }
     }
-    // printf("\n************************************\n");
-    // for(int i = 0;i<8;i++){
-    //     printf("%d ",t[i]);
-    // }
-    // printf("\n***********************************\n");
-
+    
     r[11 * i + 0] = (unsigned char) ( t[0]        & 0xff);
     r[11 * i + 1] = (unsigned char) ((t[0] >>  8) | ((t[1] & 0x1f) << 3));
     r[11 * i + 2] = (unsigned char) ((t[1] >>  5) | ((t[2] & 0x03) << 6));
@@ -252,8 +192,7 @@ void poly_pack_Sq_tobytes(unsigned char *r, Term *a)
   for(j=0;j<PACK_DEG-8*i;j+=2){
 
     Term temp = a[k++];
-        // temp.a = (temp.a%(q.a) + q.a)%q.a;
-        // temp.b = (temp.b%(q.a) + q.a)%q.a;
+        
       t[j] = temp.a;
       if(t[j]<0){
         t[j] = -t[j];
@@ -282,27 +221,13 @@ void poly_pack_Sq_tobytes(unsigned char *r, Term *a)
     r[11 * i + 6] = (unsigned char) ((t[4] >>  4) | ((t[5] & 0x01) << 7));
     r[11 * i + 7] = (unsigned char) ((t[5] >>  1) & 0xff);
     r[11 * i + 8] = (unsigned char) ((t[5] >>  9) | ((t[6] & 0x3f) << 2));
-    r[11 * i + 9] = (unsigned char) ((t[6] >>  6) | ((t[7] & 0x07) << 5));
+    r[11 * i + 9] = (unsigned char) ((t[6] >>  6) );
     break;
-    case 4:
-      r[11 * i + 0] = (unsigned char) (t[0]        & 0xff);
-      r[11 * i + 1] = (unsigned char) (t[0] >>  8) | ((t[1] & 0x1f) << 3);
-      r[11 * i + 2] = (unsigned char) (t[1] >>  5) | ((t[2] & 0x03) << 6);
-      r[11 * i + 3] = (unsigned char) (t[2] >>  2) & 0xff;
-      r[11 * i + 4] = (unsigned char) (t[2] >> 10) | ((t[3] & 0x7f) << 1);
-      r[11 * i + 5] = (unsigned char) (t[3] >>  7) | ((t[4] & 0x0f) << 4);
-      break;
-    case 3:
-      r[11 * i + 0] = (unsigned char) (t[0]        & 0xff);
-      r[11 * i + 1] = (unsigned char) (t[0] >>  8) | ((t[1] & 0x1f) << 3);
-      r[11 * i + 2] = (unsigned char) (t[1] >>  5) | ((t[2] & 0x03) << 6);
-      r[11 * i + 3] = (unsigned char) (t[2] >>  2) & 0xff;
-      r[11 * i + 4] = (unsigned char) (t[2] >> 10) | ((t[3] & 0x7f) << 1);
-
+    
     case 2:
       r[11 * i + 0] = (unsigned char) (t[0]        & 0xff);
       r[11 * i + 1] = (unsigned char) (t[0] >>  8) | ((t[1] & 0x1f) << 3);
-      r[11 * i + 2] = (unsigned char) (t[1] >>  5) | ((t[2] & 0x03) << 6);
+      r[11 * i + 2] = (unsigned char) (t[1] >>  5);
       break;
   }
 }
@@ -335,22 +260,9 @@ void poly_unpack_Sq_frombytes(Term *r, const unsigned char *a)
     arr[8*i+3] = (a[11*i+ 4] >> 1) | (((uint16_t)a[11*i+ 5] & 0x0f) << 7);
     arr[8*i+4] = (a[11*i+ 5] >> 4) | (((uint16_t)a[11*i+ 6] & 0x7f) << 4);
     arr[8*i+5] = (a[11*i+ 6] >> 7) | (((uint16_t)a[11*i+ 7] & 0xff) << 1) | (((uint16_t)a[11*i+ 8] & 0x03) <<  9);
-    arr[8*i+6] = (a[11*i+ 8] >> 2) | (((uint16_t)a[11*i+ 9] & 0x1f) << 6);
+    // arr[8*i+6] = (a[11*i+ 8] >> 2) | (((uint16_t)a[11*i+ 9] & 0x1f) << 6);
     break;
-    case 4:
-      arr[8*i+0] = (a[11*i+ 0] >> 0) | (((uint16_t)a[11*i+ 1] & 0x07) << 8);
-      arr[8*i+1] = (a[11*i+ 1] >> 3) | (((uint16_t)a[11*i+ 2] & 0x3f) << 5);
-      arr[8*i+2] = (a[11*i+ 2] >> 6) | (((uint16_t)a[11*i+ 3] & 0xff) << 2) | (((uint16_t)a[11*i+ 4] & 0x01) << 10);
-      arr[8*i+3] = (a[11*i+ 4] >> 1) | (((uint16_t)a[11*i+ 5] & 0x0f) << 7);
-      break;
-
-    case 3:
-      
-      arr[8*i+0] = (a[11*i+ 0] >> 0) | (((uint16_t)a[11*i+ 1] & 0x07) << 8);
-      arr[8*i+1] = (a[11*i+ 1] >> 3) | (((uint16_t)a[11*i+ 2] & 0x3f) << 5);
-      arr[8*i+2] = (a[11*i+ 2] >> 6) | (((uint16_t)a[11*i+ 3] & 0xff) << 2) | (((uint16_t)a[11*i+ 4] & 0x01) << 10);
-      break;
-
+    
     case 2:
       arr[8*i+0] = (a[11*i+ 0] >> 0) | (((uint16_t)a[11*i+ 1] & 0x07) << 8);
       arr[8*i+1] = (a[11*i+ 1] >> 3) | (((uint16_t)a[11*i+ 2] & 0x3f) << 5);
@@ -358,16 +270,13 @@ void poly_unpack_Sq_frombytes(Term *r, const unsigned char *a)
   }
   int k = 0;
 
-  // Term q = {Q,0};
-
+ 
   for(int i = 0;i<N3*2;i++){
         int sign = (arr[i]&(1<<10))!=0;
-        // if((r[i]&(1<<11))){
-        //     sign = 1;
-        // }
+        
         arr[i] = arr[i]&0x3ff;
         if(sign){
-            // printf("Changed\n");
+
             arr[i] = -arr[i];
         }
   }
@@ -376,7 +285,7 @@ void poly_unpack_Sq_frombytes(Term *r, const unsigned char *a)
     r[i].a = arr[k++];
     r[i].b = arr[k++];
   }
-  // r->coeffs[NTRU_N-1] = 0;
+ 
 }
 
 #elif Q==2039 || Q==2903
@@ -385,19 +294,9 @@ void poly_pack_Sq_tobytes(unsigned char *r, Term *a)
 
     Term q = {Q,0};
 
-    // Term copy[N3];
-
-    // poly_Zw_mod_q(a,q,copy);
-
-    // printf("\n----------------------------Copy-----------------------\n");
-
-    // poly_Zw_print(copy,N3);
-
-    // printf("\n----------------------------  -----------------------\n");
-   
   int i,j;
   int16_t t[8];
-//   Term arr[4];
+
 
   int k = 0;
 
@@ -405,9 +304,7 @@ void poly_pack_Sq_tobytes(unsigned char *r, Term *a)
   {
     for(j=0;j<8;j+=2){
         Term temp = a[k++];
-        // temp.a = (temp.a%(q.a) + q.a)%q.a;
-        // temp.b = (temp.b%(q.a) + q.a)%q.a;
-        // printf("(%d + %dw)\n",newTemp.a,newTemp.b);
+       
       t[j] = temp.a;
       if(t[j]<0){
         t[j] = -t[j];
@@ -419,11 +316,7 @@ void poly_pack_Sq_tobytes(unsigned char *r, Term *a)
         t[j+1] = t[j+1] | (1<<11);
       }
     }
-    // printf("\n************************************\n");
-    // for(int i = 0;i<8;i++){
-    //     printf("%d ",t[i]);
-    // }
-    // printf("\n***********************************\n");
+   
 
     r[12 * i + 0] = (unsigned char) ( t[0]        & 0xff);
     r[12 * i + 1] = (unsigned char) ((t[0] >>  8) | ((t[1] & 0x0f) << 4));
@@ -443,8 +336,7 @@ void poly_pack_Sq_tobytes(unsigned char *r, Term *a)
   for(j=0;j<PACK_DEG-8*i;j+=2){
 
     Term temp = a[k++];
-        // temp.a = (temp.a%(q.a) + q.a)%q.a;
-        // temp.b = (temp.b%(q.a) + q.a)%q.a;
+       
       t[j] = temp.a;
       if(t[j]<0){
         t[j] = -t[j];
@@ -477,21 +369,7 @@ void poly_pack_Sq_tobytes(unsigned char *r, Term *a)
     r[12 * i + 9] = (unsigned char) ( t[6]        & 0xff);
     r[12 * i + 10] = (unsigned char) ((t[6] >>  8) | ((t[7] & 0x0f) << 4));
       break;
-    case 4:
-      r[12 * i + 0] = (unsigned char) ( t[0]        & 0xff);
-    r[12 * i + 1] = (unsigned char) ((t[0] >>  8) | ((t[1] & 0x0f) << 4));
-    r[12 * i + 2] = (unsigned char) ((t[1] >>  4) & 0xff);
-    r[12 * i + 3] = (unsigned char) (t[2]         & 0xff);
-    r[12 * i + 4] = (unsigned char) ((t[2] >>  8) | ((t[3] & 0x0f) << 4));
-    r[12 * i + 5] = (unsigned char) ((t[3] >>  4) & 0xff);
-      break;
-    case 3:
-      r[12 * i + 0] = (unsigned char) ( t[0]        & 0xff);
-    r[12 * i + 1] = (unsigned char) ((t[0] >>  8) | ((t[1] & 0x0f) << 4));
-    r[12 * i + 2] = (unsigned char) ((t[1] >>  4) & 0xff);
-    r[12 * i + 3] = (unsigned char) (t[2]         & 0xff);
-    r[12 * i + 4] = (unsigned char) ((t[2] >>  8) | ((t[3] & 0x0f) << 4));
-    break;
+    
 
     case 2:
       r[12 * i + 0] = (unsigned char) ( t[0]        & 0xff);
@@ -530,20 +408,7 @@ void poly_unpack_Sq_frombytes(Term *r, const unsigned char *a)
     arr[8*i+4] = (a[12*i+ 6] >> 0) | (((uint16_t)a[12*i+ 7] & 0x0f) << 8);
     arr[8*i+5] = (a[12*i+ 7] >> 4) | (((uint16_t)a[12*i+ 8] & 0xff) << 4);
     break;
-    case 4:
-       arr[8*i+0] = (a[12*i+ 0] >> 0) | (((uint16_t)a[12*i+ 1] & 0x0f) << 8);
-    arr[8*i+1] = (a[12*i+ 1] >> 4) | (((uint16_t)a[12*i+ 2] & 0xff) << 4);
-    arr[8*i+2] = (a[12*i+ 3] >> 0) | (((uint16_t)a[12*i+ 4] & 0x0f) << 8);
-    arr[8*i+3] = (a[12*i+ 4] >> 4) | (((uint16_t)a[12*i+ 5] & 0xff) << 4);
-      break;
-
-    case 3:
-      
-      arr[8*i+0] = (a[12*i+ 0] >> 0) | (((uint16_t)a[12*i+ 1] & 0x0f) << 8);
-    arr[8*i+1] = (a[12*i+ 1] >> 4) | (((uint16_t)a[12*i+ 2] & 0xff) << 4);
-    arr[8*i+2] = (a[12*i+ 3] >> 0) | (((uint16_t)a[12*i+ 4] & 0x0f) << 8);
-      break;
-
+   
     case 2:
        arr[8*i+0] = (a[12*i+ 0] >> 0) | (((uint16_t)a[12*i+ 1] & 0x0f) << 8);
     arr[8*i+1] = (a[12*i+ 1] >> 4) | (((uint16_t)a[12*i+ 2] & 0xff) << 4);
@@ -553,12 +418,10 @@ void poly_unpack_Sq_frombytes(Term *r, const unsigned char *a)
 
   for(int i = 0;i<N3*2;i++){
         int sign = (arr[i]&(1<<11))!=0;
-        // if((r[i]&(1<<11))){
-        //     sign = 1;
-        // }
+        
         arr[i] = arr[i]&0x7ff;
         if(sign){
-            // printf("Changed\n");
+          
             arr[i] = -arr[i];
         }
   }
@@ -567,7 +430,7 @@ void poly_unpack_Sq_frombytes(Term *r, const unsigned char *a)
     r[i].a = arr[k++];
     r[i].b = arr[k++];
   }
-  // r->coeffs[NTRU_N-1] = 0;
+  
 }
 
 #elif Q==3863
@@ -576,19 +439,9 @@ void poly_pack_Sq_tobytes(unsigned char *r, Term *a)
 
     Term q = {Q,0};
 
-    // Term copy[N3];
-
-    // poly_Zw_mod_q(a,q,copy);
-
-    // printf("\n----------------------------Copy-----------------------\n");
-
-    // poly_Zw_print(copy,N3);
-
-    // printf("\n----------------------------  -----------------------\n");
-   
   int i,j;
   int16_t t[8];
-//   Term arr[4];
+
 
   int k = 0;
 
@@ -596,9 +449,7 @@ void poly_pack_Sq_tobytes(unsigned char *r, Term *a)
   {
     for(j=0;j<8;j+=2){
         Term temp = a[k++];
-        // temp.a = (temp.a%(q.a) + q.a)%q.a;
-        // temp.b = (temp.b%(q.a) + q.a)%q.a;
-        // printf("(%d + %dw)\n",newTemp.a,newTemp.b);
+       
       t[j] = temp.a;
       if(t[j]<0){
         t[j] = -t[j];
@@ -610,11 +461,7 @@ void poly_pack_Sq_tobytes(unsigned char *r, Term *a)
         t[j+1] = t[j+1] | (1<<12);
       }
     }
-    // printf("\n************************************\n");
-    // for(int i = 0;i<8;i++){
-    //     printf("%d ",t[i]);
-    // }
-    // printf("\n***********************************\n");
+    
 
     r[13*i + 0] = (t[0] & 0xff);
     r[13*i + 1] = ((t[0]>>8)&0x1f) | ((t[1]&0x07)<<5);
@@ -634,8 +481,7 @@ void poly_pack_Sq_tobytes(unsigned char *r, Term *a)
   for(j=0;j<PACK_DEG-8*i;j+=2){
 
     Term temp = a[k++];
-        // temp.a = (temp.a%(q.a) + q.a)%q.a;
-        // temp.b = (temp.b%(q.a) + q.a)%q.a;
+        
       t[j] = temp.a;
       if(t[j]<0){
         t[j] = -t[j];
@@ -666,19 +512,13 @@ void poly_pack_Sq_tobytes(unsigned char *r, Term *a)
     r[13*i + 8] = ((t[4]>>12) & 0x01) | ((t[5]&0x7f)<<1);
     r[13*i + 9] = ((t[5]>>7) & 0x3f)|((t[6]&0x03)<<6);
       break;
-    // case 3:
-    //   r[12 * i + 0] = (unsigned char) ( t[0]        & 0xff);
-    // r[12 * i + 1] = (unsigned char) ((t[0] >>  8) | ((t[1] & 0x0f) << 4));
-    // r[12 * i + 2] = (unsigned char) ((t[1] >>  4) & 0xff);
-    // r[12 * i + 3] = (unsigned char) (t[2]         & 0xff);
-    // r[12 * i + 4] = (unsigned char) ((t[2] >>  8) | ((t[3] & 0x0f) << 4));
-    // break;
+   
 
-    // case 2:
-    //   r[12 * i + 0] = (unsigned char) ( t[0]        & 0xff);
-    // r[12 * i + 1] = (unsigned char) ((t[0] >>  8) | ((t[1] & 0x0f) << 4));
-    // r[12 * i + 2] = (unsigned char) ((t[1] >>  4) & 0xff);
-    //   break;
+    case 2:
+      r[12 * i + 0] = (unsigned char) ( t[0]        & 0xff);
+    r[12 * i + 1] = (unsigned char) ((t[0] >>  8) | ((t[1] & 0x0f) << 4));
+    r[12 * i + 2] = (unsigned char) ((t[1] >>  4) & 0xff);
+      break;
   }
 }
 
@@ -712,28 +552,20 @@ void poly_unpack_Sq_frombytes(Term *r, const unsigned char *a)
     arr[8*i + 5] = (a[13*i + 8]>>1 & 0x7f) | (a[13*i + 9] & 0x3f)<<7;
       break;
 
-    // case 3:
-      
-    //   arr[8*i+0] = (a[12*i+ 0] >> 0) | (((uint16_t)a[12*i+ 1] & 0x0f) << 8);
-    // arr[8*i+1] = (a[12*i+ 1] >> 4) | (((uint16_t)a[12*i+ 2] & 0xff) << 4);
-    // arr[8*i+2] = (a[12*i+ 3] >> 0) | (((uint16_t)a[12*i+ 4] & 0x0f) << 8);
-    //   break;
-
-    // case 2:
-    //    arr[8*i+0] = (a[12*i+ 0] >> 0) | (((uint16_t)a[12*i+ 1] & 0x0f) << 8);
-    // arr[8*i+1] = (a[12*i+ 1] >> 4) | (((uint16_t)a[12*i+ 2] & 0xff) << 4);
-    //   break;
+    
+    case 2:
+       arr[8*i+0] = (a[12*i+ 0] >> 0) | (((uint16_t)a[12*i+ 1] & 0x0f) << 8);
+    arr[8*i+1] = (a[12*i+ 1] >> 4) | (((uint16_t)a[12*i+ 2] & 0xff) << 4);
+      break;
   }
   int k = 0;
 
   for(int i = 0;i<N3*2;i++){
         int sign = (arr[i]&(1<<12))!=0;
-        // if((r[i]&(1<<11))){
-        //     sign = 1;
-        // }
+        
         arr[i] = arr[i]&0xfff;
         if(sign){
-            // printf("Changed\n");
+           
             arr[i] = -arr[i];
         }
   }
@@ -742,6 +574,6 @@ void poly_unpack_Sq_frombytes(Term *r, const unsigned char *a)
     r[i].a = arr[k++];
     r[i].b = arr[k++];
   }
-  // r->coeffs[NTRU_N-1] = 0;
+ 
 }
 #endif

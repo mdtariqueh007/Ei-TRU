@@ -20,7 +20,7 @@
 // #include "packq_CnC3.h"
 #include "cca.h"
 
-#define test_cases 1
+#define test_cases 100
 
 
 int main(){
@@ -310,8 +310,10 @@ int main(){
     //****************************************************************** */
 
     unsigned char pk[CHAR_BYTES];
-    unsigned char sk[CHAR_BYTES];
-    unsigned char random[CHAR_BYTES];
+    unsigned char sk[PPKE_MESSAGEBYTES];
+    // printf("CHAR_BYTES : %d\n",CHAR_BYTES);
+    // int CHAR = 1;
+    // unsigned char random[CHAR];
 
     // printf("Start address of sk : %d\n",&sk[0]);
     // printf("End address of sk : %d\n",&sk[CHAR_BYTES-1]);
@@ -355,11 +357,11 @@ int main(){
 
     /************************************** */
 
-    unsigned char message[CHAR_BYTES];
+    unsigned char message[PPKE_MESSAGEBYTES];
     unsigned char c[CHAR_BYTES];
-    unsigned char a[CHAR_BYTES];
+    unsigned char a[PPKE_MESSAGEBYTES];
 
-    poly_pack_Sq_tobytes(message,m);
+    poly_S3m_tobytes(message,m);
 
     //  printf("Key generation before encryption:\n");
     // for(int i = 0;i<CHAR_BYTES;i++){
