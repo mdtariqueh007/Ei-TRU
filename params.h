@@ -23,7 +23,7 @@
 // #endif
 
 
-#define T_SAMPLE_BYTES ((30*(T)+7)/8)
+#define T_SAMPLE_BYTES ((30*(2*N)+7)/8)
 #define SAMPLE_BYTE 0
 
 #define N3_SAMPLE_F_BYTES N3_SAMPLE_BYTES+T_SAMPLE_BYTES

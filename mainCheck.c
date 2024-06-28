@@ -325,6 +325,8 @@ int main(){
 
     CCA_keypair(pk,sk);
 
+    // printf("%d is size of sk\n",sizeof(sk));
+
     // printf("Key generation:\n");
     // for(int i = 0;i<CHAR_BYTES;i++){
     //     printf("%d, ",sk[i]);
