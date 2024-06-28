@@ -10,8 +10,8 @@ void sample_lphi(Term* r,const unsigned char u[N3_SAMPLE_BYTES]){
 void sample_phi(Term* phi,const Term* h, const Term* m){
     unsigned char r_seed[2*LENGTH_OF_HASH];
 
-    sha3_512(r_seed,(unsigned char*)(m), N3);
-    sha3_512(r_seed+LENGTH_OF_HASH,(unsigned char*)(h), N3);
+    sha3_512(r_seed,(unsigned char*)(m), N3*2);
+    sha3_512(r_seed+LENGTH_OF_HASH,(unsigned char*)(h), N3*2);
 
     int filled = 0;
 

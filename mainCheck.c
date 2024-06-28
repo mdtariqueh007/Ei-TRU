@@ -1,23 +1,20 @@
 #include <stdio.h>
 
-#include "poly_r.h"
+// #include "poly_r.h"
 // #include "sample.h"
 // #include "rng.h"
 
-#include "crypto_sort_int32.h"
+// #include "crypto_sort_int32.h"
 
-#include "encrypt.h"
-#include "decrypt.h"
 
-#include "key_gen.h"
 
 #include<time.h>
 
 // #include "pke.h"
 // #include "ppke.h"
 
-// #include "pack3_CnC3.h"
-// #include "packq_CnC3.h"
+#include "pack3_CnC3.h"
+#include "packq_CnC3.h"
 #include "cca.h"
 
 #define test_cases 100
@@ -402,6 +399,7 @@ int main(){
     // printf("PPKE_MESSAGEBYTES : %d\n",PPKE_MESSAGEBYTES);
     // printf("CIPHERTEXTBYTES : %d\n",CIPHERTEXTBYTES);
 
+    printf("PPKE_SECRETKEYBYTES : %d\n",PPKE_SECRETKEYBYTES);
    
     
 
